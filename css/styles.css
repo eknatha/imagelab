@@ -154,19 +154,23 @@ footer b{color:var(--ink-dim)}footer a{color:var(--acc-soft);text-decoration:non
 .cropwrap canvas{display:block;max-width:100%;cursor:crosshair}
 
 @media (max-width:560px){
-  .nav-tag{display:none}
+  .nav-tag .pill{display:none}
   .ws.open{padding:0}
   .ws-inner{border-radius:0;min-height:100vh;max-width:100%}
   .preview{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-/* ============ visitor counter — glass stat bar ============ */
-.vbar{display:flex;align-items:stretch;margin-top:22px;max-width:380px;background:linear-gradient(160deg,rgba(99,102,241,.08),rgba(236,72,153,.06));border:1px solid var(--line-bright);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
-.vbar .seg{flex:1;padding:13px 18px;display:flex;flex-direction:column;gap:3px}
-.vbar .seg+.seg{border-left:1px solid var(--line)}
-.vbar .vk{font-family:var(--mono);font-size:9.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em;display:flex;align-items:center;gap:6px}
-.vbar .vv{font-family:var(--mono);font-size:20px;font-weight:700;background:linear-gradient(120deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.vbar .vv.loading{-webkit-text-fill-color:var(--ink-faint);color:var(--ink-faint)}
-.visitor-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--acc);box-shadow:0 0 7px rgba(168,85,247,.7);animation:pulse 2s ease-in-out infinite;flex-shrink:0}
-@media(max-width:860px){.vbar{max-width:100%}}
+
+/* ============ visitor counter — gradient-ring header chip ============ */
+.vchip{display:flex;align-items:center;gap:9px;padding:6px 8px 6px 13px;border-radius:30px;border:1px solid transparent;background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(120deg,var(--g1),var(--g2)) border-box;font-family:var(--mono)}
+.vchip .vlive{display:flex;align-items:center;gap:6px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-dim)}
+.vchip .vtotal{font-size:14px;font-weight:700;background:linear-gradient(120deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.vchip .vtotal.loading{-webkit-text-fill-color:var(--ink-faint);color:var(--ink-faint)}
+.vchip .vtoday{background:rgba(168,85,247,.15);border-radius:20px;padding:3px 9px;font-size:11px;color:var(--acc-soft);font-weight:600;white-space:nowrap}
+.vchip .vtoday.loading{color:var(--ink-faint);background:rgba(90,102,128,.12)}
+.visitor-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.8);animation:pulse 1.8s ease-in-out infinite;flex-shrink:0}
+@media(max-width:560px){
+  .vchip .vlive{display:none}
+  .vchip{padding:6px 10px}
+}
