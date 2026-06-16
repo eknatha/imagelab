@@ -31,6 +31,17 @@
         <button class="btn-primary" id="startBtn">Start editing &rarr;</button>
         <span class="sub"><b>8</b> tools &middot; <b>0</b> uploads</span>
       </div>
+      <div class="visitor-box">
+        <div class="visitor-row">
+          <span class="visitor-label"><span class="visitor-dot"></span>Total Visitors</span>
+          <span class="visitor-count loading" id="totalCount">&mdash;</span>
+        </div>
+        <div class="visitor-divider"></div>
+        <div class="visitor-row">
+          <span class="visitor-label">Visitors Today</span>
+          <span class="visitor-count loading" id="todayCount">&mdash;</span>
+        </div>
+      </div>
     </div>
     <div class="demo">
       <div class="frame" id="frame">
@@ -86,5 +97,6 @@
 <!-- app boot + hero demo -->
 <script src="js/app.js"></script>
 <script src="js/hero-demo.js"></script>
+<script src="js/visitors.js"></script>
 </body>
 </html>
