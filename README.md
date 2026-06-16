@@ -11,16 +11,21 @@ Sibling project: [PaperLab](https://paperlab.eknathalabs.com) (PDF toolkit) — 
 ## Architecture
 
 Multi-file vanilla HTML/CSS/JS — no build step, no framework. `index.html` is a thin
-shell that loads a shared core plus one self-registering module per tool.
+shell that loads a shared core plus one self-registering module per tool. The hero
+features a **live before/after demo** running real Canvas processing — the same engine
+the tools use.
 
 ```
 imagelab/
 ├── index.html              # shell: markup + script tags only
-├── css/styles.css          # all styling (cyan accent)
+├── css/
+│   └── styles.css          # all styling (experimental hero + tool UI)
 ├── js/
 │   ├── helpers.js          # ImageLab namespace + canvas/zip utils
 │   ├── registry.js         # tool metadata
+│   ├── sample.js           # embedded demo image (data URI, ~19KB)
 │   ├── app.js              # grid render + workspace modal + boot
+│   ├── hero-demo.js        # live before/after slider (page-specific)
 │   └── tools/              # one file per tool, each calls ImageLab.register(id, fn)
 │       ├── convert.js
 │       ├── compress.js
@@ -30,9 +35,11 @@ imagelab/
 │       ├── watermark.js
 │       ├── favicon.js
 │       └── exif.js
-├── vendor/                 # (optional) drop fflate here for zero-network
+├── vendor/
+│   └── fflate.min.js       # ZIP library, vendored for true zero-network
 ├── CNAME
-└── .nojekyll
+├── .nojekyll
+└── README.md
 ```
 
 ### Adding a tool
@@ -46,7 +53,7 @@ imagelab/
 2. Add a metadata entry to `js/registry.js`.
 3. Add a `<script src="js/tools/<id>.js">` line in `index.html`.
 
-## Tools (Phase 1)
+## Tools
 
 | Group | Tool | Notes |
 |---|---|---|
@@ -54,20 +61,20 @@ imagelab/
 | Edit | Crop (drag/ratio), Rotate & flip, Watermark | |
 | Utility | Favicon set (multi-size + HTML snippet), Strip EXIF | privacy |
 
-All processing uses the Canvas API. Batch jobs bundle into a ZIP via `fflate`.
+All processing uses the Canvas API. Batch jobs bundle into a ZIP via the vendored `fflate`.
 
-## Coming (lazy-loaded WASM/model modules)
+## Coming (lazy-loaded model modules)
 
 - **Background remover** — U2Net-style segmentation via ONNX Runtime Web
 - **Upscaler** — ESRGAN via WASM / WebGPU
 
 Kept out of the base build so the core stays light; they load only when used.
 
-## Engines
+## Fully offline
 
-`fflate` (ZIP) loads from CDN by default. For **true zero-network**, download it into
-`vendor/` and repoint the `<script>` tag in `index.html`. Everything else is native
-browser Canvas — no other dependencies.
+Every dependency is local — `fflate` is vendored in `vendor/`, the demo image is
+embedded, and all processing is native browser Canvas. The page works with no network
+connection at all once loaded.
 
 ## Known limits (honest)
 
@@ -75,9 +82,19 @@ browser Canvas — no other dependencies.
 - Canvas re-encoding is lossy for JPEG/WebP — PNG stays lossless.
 - Stripping EXIF works by re-encoding; it does not edit the original file in place.
 
+## Run locally
+
+Because it's multi-file, open it through a server (not `file://`):
+
+```
+cd imagelab
+python3 -m http.server 8000
+# visit http://localhost:8000
+```
+
 ## Deploy (GitHub Pages)
 
-1. Push to the `imagelab` repo (preserve `css/` and `js/tools/` paths).
+1. Push to the `imagelab` repo (preserve `css/`, `js/`, `js/tools/`, `vendor/` paths).
 2. Settings → Pages → deploy from `main` / root.
 3. DNS: add CNAME record `imagelab` → `eknatha.github.io`.
 4. The `CNAME` file binds the custom domain; `.nojekyll` keeps Pages from filtering paths.
