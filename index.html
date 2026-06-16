@@ -8,48 +8,70 @@
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<div class="gradient-bg"></div>
+<div class="noise"></div>
+
 <header>
   <div class="topbar">
-    <div class="brand"><span class="dot"></span><b>Image<span class="lab">Lab</span></b></div>
-    <div class="tag">
+    <div class="brand"><span class="mk">◧</span>Image<span class="lab">Lab</span></div>
+    <div class="nav-tag">
       <span class="pill"><b>100%</b> offline</span>
       <span class="pill">no uploads</span>
-      <span class="pill">runs in browser</span>
     </div>
   </div>
 </header>
 
 <div class="wrap">
   <section class="hero">
-    <h1>Image toolkit</h1>
-    <p>Convert, compress, resize, and edit images entirely on your machine. Files never leave the browser — nothing is uploaded, stored, or sent anywhere. <span class="crumb">imagelab.eknathalabs.com</span></p>
+    <div class="hl">
+      <span class="badge-pill"><span class="blip"></span> your images never leave this tab</span>
+      <h1>Image tools that <span class="grad">just work</span>, instantly.</h1>
+      <p class="lede"><b>Convert, compress, resize, crop</b> &mdash; every operation runs on your own machine. No uploads, no signup, no waiting. Drag the slider to watch it happen live.</p>
+      <div class="cta-row">
+        <button class="btn-primary" id="startBtn">Start editing &rarr;</button>
+        <span class="sub"><b>8</b> tools &middot; <b>0</b> uploads</span>
+      </div>
+    </div>
+    <div class="demo">
+      <div class="frame" id="frame">
+        <canvas id="demoCv"></canvas>
+        <span class="lbl raw">before</span>
+        <span class="lbl done">after</span>
+        <div class="handle" id="demoHandle"><div class="knob">&#8646;</div></div>
+      </div>
+      <div class="cap">&uarr; real-time canvas processing, drag to compare</div>
+    </div>
   </section>
-  <main class="grid" id="grid"></main>
+
+  <div id="primary"></div>
+  <main id="grid"></main>
 </div>
 
 <footer>
   <div class="wrap">
-    Part of the <b>EknathaLabs</b> ecosystem · offline-first, zero-dependency tools · <a href="https://eknathalabs.com">eknathalabs.com</a>
+    Part of the <b>EknathaLabs</b> ecosystem &middot; offline-first tools &middot; <a href="https://eknathalabs.com">eknathalabs.com</a>
+    <div class="sib">sibling project &mdash; <a href="https://paperlab.eknathalabs.com">PaperLab</a>, the PDF toolkit</div>
   </div>
 </footer>
 
 <div class="ws" id="ws" role="dialog" aria-modal="true">
   <div class="ws-inner">
     <div class="ws-head">
-      <span class="ico" id="wsIco">▸</span>
+      <span class="ico" id="wsIco">&#9656;</span>
       <h2 id="wsTitle">Tool</h2>
-      <button class="x" id="wsClose" aria-label="Close">✕</button>
+      <button class="x" id="wsClose" aria-label="Close">&#10005;</button>
     </div>
     <div class="ws-body" id="wsBody"></div>
   </div>
 </div>
 
-<!-- ZIP helper for batch downloads (swap to vendor/ for true zero-network) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fflate/0.8.2/umd/index.js"></script>
+<!-- ZIP helper for batch downloads (vendored locally for true zero-network) -->
+<script src="vendor/fflate.min.js"></script>
 
 <!-- core -->
 <script src="js/helpers.js"></script>
 <script src="js/registry.js"></script>
+<script src="js/sample.js"></script>
 
 <!-- tools (each self-registers into ImageLab.tools) -->
 <script src="js/tools/convert.js"></script>
@@ -61,7 +83,8 @@
 <script src="js/tools/favicon.js"></script>
 <script src="js/tools/watermark.js"></script>
 
-<!-- app boot -->
+<!-- app boot + hero demo -->
 <script src="js/app.js"></script>
+<script src="js/hero-demo.js"></script>
 </body>
 </html>
