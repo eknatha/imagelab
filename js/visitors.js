@@ -12,6 +12,12 @@
     el.textContent = fmt(val);
     el.classList.remove('loading');
   }
+  function setToday(val) {
+    const el = document.getElementById('todayCount');
+    if (!el) return;
+    el.textContent = '+' + fmt(val) + ' today';
+    el.classList.remove('loading');
+  }
 
   // ── TODAY count ──────────────────────────────────────────────
   const todayStr  = new Date().toISOString().slice(0, 10);
@@ -24,10 +30,10 @@
     localStorage.setItem('il-today-count', next);
     localStorage.setItem('il-seen-date', todayStr);
     sessionStorage.setItem('il-counted', '1');
-    setCount('todayCount', next);
+    setToday(next);
   } else {
     const current = parseInt(localStorage.getItem('il-today-count') || '1');
-    setCount('todayCount', current);
+    setToday(current);
   }
 
   const lastDate = localStorage.getItem('il-seen-date');
